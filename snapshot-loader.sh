@@ -79,7 +79,7 @@ then
     #     echo "Error: Checksum is not good. expected ${remote_sha256sum}, got ${local_sha256sum}"
     #     exit 1
     #   fi
-    fi
+    # fi
     # If the loading of the snapshot went well on the temp folder, move it to its final location
     mv "$ALEPHIUM_HOME/${ALEPHIUM_NETWORK}-snapshot/$ALEPHIUM_NETWORK" "$ALEPHIUM_HOME"
     # Cleanup to keep every thing nice and shiny
