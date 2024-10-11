@@ -46,7 +46,10 @@ then
 
     # Check if enough disk space available
     availableSpace=$(df -B1 "$ALEPHIUM_HOME" | tail -n 1 | awk '{print $4}' | head -n 1)
+    echo "Using https://archives.alephium.org/archives/$ALEPHIUM_NETWORK/${NODE_TYPE}-node-data/_latest_with-indexes.txt)"
     neededSpace=$(curl -s -I -L "$(curl -sL https://archives.alephium.org/archives/$ALEPHIUM_NETWORK/${NODE_TYPE}-node-data/_latest_with-indexes.txt)" | grep -i 'Content-Length:' | awk '{print $2}' | tr -d '\r')
+    echo "Need $neededSpace"
+    echo "Have $availableSpace"
     neededSpaceWithMargin=$(echo "${neededSpace} * 1.2 / 1" | bc)
     neededSpaceInGB=$(echo "${neededSpaceWithMargin} / 1000 / 1000 / 1000 / 1" | bc)
     availableSpaceInGB=$(echo "${availableSpace} / 1000 / 1000 / 1000 / 1" | bc)
