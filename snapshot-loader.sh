@@ -46,7 +46,7 @@ then
 
     # Check if enough disk space available
     availableSpace=$(df -B1 "$ALEPHIUM_HOME" | tail -n 1 | awk '{print $4}' | head -n 1)
-    neededSpace=$(curl -s -I -L "$(curl -sL https://archives.alephium.org/archives/$ALEPHIUM_NETWORK/${NODE_TYPE}-node-data/_latest-with-indexes.txt)" | grep -i 'Content-Length:' | awk '{print $2}' | tr -d '\r')
+    neededSpace=$(curl -s -I -L "$(curl -sL https://archives.alephium.org/archives/$ALEPHIUM_NETWORK/${NODE_TYPE}-node-data/_latest_with-indexes.txt)" | grep -i 'Content-Length:' | awk '{print $2}' | tr -d '\r')
     neededSpaceWithMargin=$(echo "${neededSpace} * 1.2 / 1" | bc)
     neededSpaceInGB=$(echo "${neededSpaceWithMargin} / 1000 / 1000 / 1000 / 1" | bc)
     availableSpaceInGB=$(echo "${availableSpace} / 1000 / 1000 / 1000 / 1" | bc)
@@ -59,7 +59,7 @@ then
     echo "Loading $ALEPHIUM_NETWORK snapshot from official https://archives.alephium.org"
     # Creating a temp folder (on the same volume) where snapshot will be loaded
     mkdir "$ALEPHIUM_HOME/${ALEPHIUM_NETWORK}-snapshot"
-    curl -L "$(curl -sL https://archives.alephium.org/archives/$ALEPHIUM_NETWORK/${NODE_TYPE}-node-data/_latest-with-indexes.txt)" | $TEE_HASH_CMD | tar xf - -C "$ALEPHIUM_HOME/${ALEPHIUM_NETWORK}-snapshot"
+    curl -L "$(curl -sL https://archives.alephium.org/archives/$ALEPHIUM_NETWORK/${NODE_TYPE}-node-data/_latest_with-indexes.txt)" | $TEE_HASH_CMD | tar xf - -C "$ALEPHIUM_HOME/${ALEPHIUM_NETWORK}-snapshot"
     res=$?
     if [ "$res" != "0" ]; # If curl or tar command failed, stopping the load of the snapshot.
     then
